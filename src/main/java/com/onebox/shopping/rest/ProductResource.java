@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.onebox.shopping.rest.mapper.ProductMapper;
 import com.onebox.shopping.rest.model.Product;
@@ -20,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 /**
  * REST controller for managing Products.
  */
-@RestController("/api")
 @Api(tags = { "Product Resource" })
 @RequestMapping("/api")
 public class ProductResource {

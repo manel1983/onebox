@@ -163,7 +163,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>vdSso</finalName>
+		<finalName>shopping</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -19,19 +19,19 @@ public class CartRepositoryCache implements CartRepository {
 	}
 
 	public Long createCart(final CartDb cartDb) {
-		cachedList().add(cartDb);
+		return Long.getLong("1");
 	}
 	
 	public boolean deleteCart(final Long cartId) {
-		
+		return true;
 	}
 	
 	public boolean addProduct(final Long cartId, final Long productId) {
-		
+		return true;
 	}
 	
 	public boolean removeProduct(final Long cartId, final Long productId) {
-		
+		return true;
 	}
 
 	@Cacheable("carts")

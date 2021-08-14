@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.onebox.shopping.rest.mapper.CartMapper;
 import com.onebox.shopping.rest.model.Cart;
@@ -21,7 +20,6 @@ import io.swagger.annotations.ApiOperation;
 /**
  * REST controller for managing Carts.
  */
-@RestController("/api")
 @Api(tags = { "Cart Resource" })
 @RequestMapping("/api")
 public class CartResource {
