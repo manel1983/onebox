@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: shopping
+  mvc:
+    favicon:
+      enabled: false
+  profiles:
+    include: swagger
+
+server:
+  port: 8090
+
