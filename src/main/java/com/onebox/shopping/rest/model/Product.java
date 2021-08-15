@@ -10,11 +10,17 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * A Cart.
  */
-@lombok.Data
-@lombok.NoArgsConstructor
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public Product() {
+	
+	}
+	
+	public Product(Long id) {
+		setId(id);
+	}
 
 	@NotNull
 	@ApiModelProperty(value = "The product id", example = "23")
@@ -27,5 +33,29 @@ public class Product implements Serializable {
 	@NotNull
 	@ApiModelProperty(value = "The product price", example = "12.50")
 	private BigDecimal amount;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
 }

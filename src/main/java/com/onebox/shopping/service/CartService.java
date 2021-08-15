@@ -1,12 +1,12 @@
 package com.onebox.shopping.service;
 
-import com.onebox.shopping.domain.model.CartDb;
+import com.onebox.shopping.rest.model.Cart;
 
 public interface CartService {
 
-	CartDb findCart(final Long cartId);
+	Cart findCart(final Long cartId);
 
-	CartDb createCart(final CartDb cartDb);
+	Cart createCart(final Cart cart);
 
 	boolean deleteCart(final Long cartId);
 

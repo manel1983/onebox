@@ -2,12 +2,12 @@ package com.onebox.shopping.service;
 
 import java.util.List;
 
-import com.onebox.shopping.domain.model.ProductDb;
+import com.onebox.shopping.rest.model.Product;
 
 public interface ProductService {
 
-	ProductDb findProduct(final Long productId);
+	Product findProduct(final Long productId);
 
-	List<ProductDb> searchProducts(final String description);
+	List<Product> searchProducts(final String description);
 
 }

@@ -2,8 +2,8 @@ package com.onebox.shopping.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.onebox.shopping.domain.model.CartDb;
 import com.onebox.shopping.domain.repository.CartRepository;
+import com.onebox.shopping.rest.model.Cart;
 import com.onebox.shopping.service.CartService;
 
 @Service
@@ -15,13 +15,13 @@ public class CartServiceImpl implements CartService {
 		this.cartRepository = cartRepository;
 	}
 
-	public CartDb findCart(final Long cartId) {
+	public Cart findCart(final Long cartId) {
 		return this.cartRepository.findCart(cartId);
 	}
 
-	public CartDb createCart(final CartDb cartDb) {
-		Long cartId = this.cartRepository.createCart(cartDb);
-		return new CartDb(cartId);
+	public Cart createCart(final Cart cart) {
+		Long cartId = this.cartRepository.createCart(cart);
+		return new Cart(cartId);
 	}
 
 	public boolean deleteCart(final Long cartId) {

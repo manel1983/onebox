@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.onebox.shopping.domain.model.ProductDb;
 import com.onebox.shopping.domain.repository.ProductRepository;
+import com.onebox.shopping.rest.model.Product;
 import com.onebox.shopping.service.ProductService;
 
 @Service
@@ -18,12 +18,12 @@ public class ProductServiceImpl implements ProductService {
 		this.productRepository = productRepository;
 	}
 
-	public ProductDb findProduct(final Long productId) {
-		Optional<ProductDb> optProduct = this.productRepository.findProduct(productId);
+	public Product findProduct(final Long productId) {
+		Optional<Product> optProduct = this.productRepository.findProduct(productId);
 		return optProduct.isPresent() ? optProduct.get() : null;
 	}
 
-	public List<ProductDb> searchProducts(final String description) {
+	public List<Product> searchProducts(final String description) {
 		return productRepository.searchProducts(description);
 	}
 

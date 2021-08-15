@@ -8,18 +8,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.onebox.shopping.rest.mapper.ProductMapper;
 import com.onebox.shopping.rest.model.Product;
 import com.onebox.shopping.service.ProductService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * REST controller for managing Products.
  */
-@Api(tags = { "Product Resource" })
+@RestController
+@Api(value = "/api/product")
+@SwaggerDefinition(tags = {
+	@io.swagger.annotations.Tag(name = "Products Resource", description = "Products functionalities")
+})
 @RequestMapping("/api")
 public class ProductResource {
 
@@ -27,24 +33,21 @@ public class ProductResource {
 
 	private final ProductService productService;
 
-	private final ProductMapper productMapper;
-
-	public ProductResource(final ProductService productService, final ProductMapper productMapper) {
+	public ProductResource(final ProductService productService) {
 		this.productService = productService;
-		this.productMapper = productMapper;
 	}
 
 	/**
 	 * GET /product : Create a cart.
 	 *
 	 */
-	@ApiOperation(value = "Product", code = 201, notes = "Find a Product.")
+	@ApiOperation(value = "Product", code = 201, notes = "Find a Product.", consumes = "application/json", produces = "application/json" )
 	@GetMapping("/product/{productId}")
 	public ResponseEntity<Product> findProduct(@PathVariable Long productId) {
 
 		log.debug("Find a Product");
 
-		Product product = this.productMapper.mapEntity(this.productService.findProduct(productId));
+		Product product = this.productService.findProduct(productId);
 
 		return ResponseEntity.ok().body(product);
 	}
@@ -53,12 +56,12 @@ public class ProductResource {
 	 * Search /product : Search products.
 	 *
 	 */
-	@ApiOperation(value = "Product", code = 200, notes = "Search products.")
+	@ApiOperation(value = "Product", code = 200, notes = "Search products.", consumes = "application/json", produces = "application/json")
 	@GetMapping("/product")
-	public ResponseEntity<List<Product>> searchProducts(@PathVariable String description) {
+	public ResponseEntity<List<Product>> searchProducts(@RequestParam(name = "description", required = false) String description) {
 		log.debug("Search products");
 
-		List<Product> products = this.productMapper.mapList(this.productService.searchProducts(description));
+		List<Product> products = this.productService.searchProducts(description);
 
 		return ResponseEntity.ok().body(products);
 	}

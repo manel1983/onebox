@@ -9,42 +9,46 @@ import java.util.stream.Collectors;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import com.onebox.shopping.domain.model.ProductDb;
 import com.onebox.shopping.domain.repository.ProductRepository;
+import com.onebox.shopping.rest.model.Product;
 
 @Component
 public class ProductRepositoryCache implements ProductRepository {
 	
-	public Optional<ProductDb> findProduct(final Long productId) {
-		List<ProductDb> products =  cachedList();
+	public Optional<Product> findProduct(final Long productId) {
+		List<Product> products =  cachedList();
 		return products.stream().filter(pr -> pr.getId().equals(productId)).findAny();
 	}
 
-	public List<ProductDb> searchProducts(final String description) {
-		List<ProductDb> products =  cachedList();
+	public List<Product> searchProducts(final String description) {
+		List<Product> products =  cachedList();
 
-		return products.stream().filter(pr -> pr.getDescripton().contains(description)).collect(Collectors.toList());
+		if (description != null) {
+			return products.stream().filter(pr -> pr.getDescription().contains(description)).collect(Collectors.toList());
+		} else {
+			return products;
+		}
 	}
 
 	@Cacheable("products")
-	private List<ProductDb> cachedList() {
-		List<ProductDb> products =  new ArrayList<>();
+	private List<Product> cachedList() {
+		List<Product> products =  new ArrayList<>();
 
-		ProductDb product = new ProductDb();
+		Product product = new Product();
 		product.setId(Long.valueOf("1"));
-		product.setDescripton("Product 1");
+		product.setDescription("Product 1");
 		product.setAmount(BigDecimal.valueOf(Double.valueOf("10.50")));
 		products.add(product);
 
-		product = new ProductDb();
+		product = new Product();
 		product.setId(Long.valueOf("2"));
-		product.setDescripton("Ticket 2");
+		product.setDescription("Ticket 2");
 		product.setAmount(BigDecimal.valueOf(Double.valueOf("45.90")));
 		products.add(product);
 
-		product = new ProductDb();
+		product = new Product();
 		product.setId(Long.valueOf("3"));
-		product.setDescripton("Laptop 3");
+		product.setDescription("Laptop 3");
 		product.setAmount(BigDecimal.valueOf(Double.valueOf("599.00")));
 		products.add(product);
 		

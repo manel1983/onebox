@@ -2,14 +2,14 @@ package com.onebox.shopping.domain.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.onebox.shopping.domain.model.CartDb;
+import com.onebox.shopping.rest.model.Cart;
 
 @Repository
 public interface CartRepository {
 
-	CartDb findCart(final Long cartId);
+	Cart findCart(final Long cartId);
 
-	Long createCart(final CartDb cartDb);
+	Long createCart(final Cart cart);
 	
 	boolean deleteCart(final Long cartId);
 	

@@ -5,13 +5,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.onebox.shopping.domain.model.ProductDb;
+import com.onebox.shopping.rest.model.Product;
 
 @Repository
 public interface ProductRepository {
 		
-	Optional<ProductDb> findProduct(final Long productId);
+	Optional<Product> findProduct(final Long productId);
 	
-	List<ProductDb> searchProducts(final String description);
+	List<Product> searchProducts(final String description);
 
 }

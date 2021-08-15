@@ -12,6 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableCaching
 public class Application {
+	
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {

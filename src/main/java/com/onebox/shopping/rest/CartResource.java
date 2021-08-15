@@ -9,42 +9,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.onebox.shopping.rest.mapper.CartMapper;
 import com.onebox.shopping.rest.model.Cart;
 import com.onebox.shopping.service.CartService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * REST controller for managing Carts.
  */
-@Api(tags = { "Cart Resource" })
+
+@RestController
+@Api(value = "/api/cart")
+@SwaggerDefinition(tags = {
+	@io.swagger.annotations.Tag(name = "Carts Resource", description = "Carts functionalities")
+})
 @RequestMapping("/api")
 public class CartResource {
 
 	private final Logger log = LoggerFactory.getLogger(CartResource.class);
 
 	private final CartService cartService;
-	private final CartMapper cartMapper;
 
-	public CartResource(final CartService cartService, final CartMapper cartMapper) {
+	public CartResource(final CartService cartService) {
 		this.cartService = cartService;
-		this.cartMapper = cartMapper;
 	}
 
 	/**
 	 * GET /cart : Find a cart.
 	 *
 	 */
-	@ApiOperation(value = "Cart", code = 200, notes = "Find a Cart.")
+	@ApiOperation(value = "Cart", code = 200, notes = "Find a Cart.", consumes = "application/json", produces = "application/json")
 	@GetMapping("/cart/{cartId}")
 	public ResponseEntity<Cart> findCart(@PathVariable Long cartId) {
 
 		log.debug("Find a Cart");
 
-		Cart cart = this.cartMapper.mapEntity(this.cartService.findCart(cartId));
+		Cart cart = this.cartService.findCart(cartId);
 
 		return ResponseEntity.ok().body(cart);
 	}
@@ -53,13 +57,13 @@ public class CartResource {
 	 * POST /cart : Create a cart.
 	 *
 	 */
-	@ApiOperation(value = "Cart ", code = 201, notes = "Create a new Cart.")
+	@ApiOperation(value = "Cart ", code = 201, notes = "Create a new Cart.", consumes = "application/json", produces = "application/json")
 	@PostMapping("/cart")
-	public ResponseEntity<Cart> checkSso(@RequestBody Cart cart) {
+	public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
 
 		log.debug("Create a new Cart");
 
-		Cart newCart = this.cartMapper.mapEntity(this.cartService.createCart(this.cartMapper.mapDb(cart)));
+		Cart newCart = this.cartService.createCart(cart);
 
 		return ResponseEntity.ok().body(newCart);
 	}
@@ -68,7 +72,7 @@ public class CartResource {
 	 * Delete /cart : Delete a cart.
 	 *
 	 */
-	@ApiOperation(value = "Cart ", code = 200, notes = "Delete an existing cart.")
+	@ApiOperation(value = "Cart ", code = 200, notes = "Delete an existing cart.", consumes = "application/json", produces = "application/json")
 	@DeleteMapping("/cart")
 	public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
 		log.debug("Delete a cart");
@@ -86,7 +90,7 @@ public class CartResource {
 	 * Post /cart_product : Add a carts product.
 	 *
 	 */
-	@ApiOperation(value = "Cart ", code = 201, notes = "Add a carts product.")
+	@ApiOperation(value = "Cart ", code = 201, notes = "Add a carts product.", consumes = "application/json", produces = "application/json")
 	@PostMapping("/cart_product")
 	public ResponseEntity<Void> addCartProduct(@PathVariable Long cartId, @PathVariable Long productId) {
 		log.debug("Add a carts product");
@@ -104,7 +108,7 @@ public class CartResource {
 	 * Delete /cart : Delete a carts product.
 	 *
 	 */
-	@ApiOperation(value = "Cart ", code = 200, notes = "Delete a carts product.")
+	@ApiOperation(value = "Cart ", code = 200, notes = "Delete a carts product.", consumes = "application/json", produces = "application/json")
 	@DeleteMapping("/cart_product")
 	public ResponseEntity<Void> deleteCartProduct(@PathVariable Long cartId, @PathVariable Long productId) {
 		log.debug("Delete a carts product");

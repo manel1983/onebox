@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: shopping
+  mvc:
+    favicon:
+      enabled: false
+  profiles:
+    include: swagger
+
+server:
+  port: 8090
+
+application:
+  logstash:
+    enabled: false
+    host: localhost
+    port: 5001
+    queusize: 512
