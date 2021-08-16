@@ -1,4 +1,4 @@
-package com.onebox.shopping.rest.model;
+package com.onebox.shopping.domain.model;
 
 import java.io.Serializable;
 
@@ -7,13 +7,13 @@ import javax.validation.constraints.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * A Cart Poduct Dto.
+ * A Cart Products.
  */
-public class CartProductDto implements Serializable {
+public class CartProducts implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public CartProductDto() {
+	public CartProducts() {
 	}
 
 	@NotNull
@@ -21,11 +21,11 @@ public class CartProductDto implements Serializable {
 	private Long cartId;
 
 	@NotNull
-	@ApiModelProperty(value = "The Product id", example = "1", required = true)
+	@ApiModelProperty(value = "The product id", example = "1", required = true)
 	private Long productId;
 
 	@NotNull
-	@ApiModelProperty(value = "The amount", example = "1", required = true)
+	@ApiModelProperty(value = "The amount")
 	private Long amount;
 
 	public Long getCartId() {

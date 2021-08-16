@@ -32,7 +32,7 @@ public class Product implements Serializable {
 
 	@NotNull
 	@ApiModelProperty(value = "The product price", example = "12.50")
-	private BigDecimal amount;
+	private BigDecimal price;
 
 	public Long getId() {
 		return id;
@@ -50,12 +50,12 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public BigDecimal getAmount() {
-		return amount;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 }

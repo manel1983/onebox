@@ -1,5 +1,6 @@
 package com.onebox.shopping.rest;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class CartResource {
 		log.debug("Find a Cart");
 
 		if (this.cartService.isCartExpired(cartId)) {
-			return ResponseEntity.status(400).body("The cart has expired.");
+			return ResponseEntity.status(400).body("The cart has expired");
 		}
 
 		Cart cart = this.cartService.findCart(cartId);
@@ -100,15 +101,15 @@ public class CartResource {
 		log.debug("Add a carts product");
 
 		if (this.cartService.isCartExpired(cartProductDto.getCartId())) {
-			return ResponseEntity.status(400).body("The cart has expired.");
+			return ResponseEntity.status(400).body(new JSONObject().append("message", "The cart has expired."));
 		}
 
-		boolean result = this.cartService.addProduct(cartProductDto.getCartId(), cartProductDto.getProductId());
+		boolean result = this.cartService.addProduct(cartProductDto.getCartId(), cartProductDto.getProductId(), cartProductDto.getAmount());
 		
 		if (result) {
 			return ResponseEntity.ok().build();
 		} else {
-			return ResponseEntity.status(400).body("An error occurred adding the product");
+			return ResponseEntity.status(400).body(new JSONObject().append("message", "An error occurred adding the product."));
 		}
 	}
 
@@ -122,7 +123,7 @@ public class CartResource {
 		log.debug("Delete a carts product");
 
 		if (this.cartService.isCartExpired(cartId)) {
-			return ResponseEntity.status(400).body("The cart has expired.");
+			return ResponseEntity.status(400).body(new JSONObject().append("message", "The cart has expired."));
 		}
 
 		boolean result = this.cartService.removeProduct(cartId, productId);
@@ -130,7 +131,7 @@ public class CartResource {
 		if (result) {
 			return ResponseEntity.ok().build();
 		} else {
-			return ResponseEntity.status(400).body("An error ocurred trying to remove the product");
+			return ResponseEntity.status(400).body(new JSONObject().append("message", "An error ocurred trying to remove the product"));
 		}
 	}
 

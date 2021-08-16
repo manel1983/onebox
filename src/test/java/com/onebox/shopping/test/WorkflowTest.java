@@ -34,7 +34,7 @@ public class WorkflowTest {
 			// Create a new cart
 			Cart cart = new Cart();
 			cart.setId(Long.valueOf(CART_ID));
-			cart.setProducts(new ArrayList<>());
+			cart.setCartProducts(new ArrayList<>());
 			cart.setUsername("MSA");
 
 			Cart createdCart = this.cartService.createCart(cart);
@@ -45,19 +45,19 @@ public class WorkflowTest {
 			Cart existingCart = this.cartService.findCart(CART_ID);
 			Assertions.assertNotNull(existingCart);
 			Assertions.assertEquals(existingCart.getId(), CART_ID);
-			Assertions.assertTrue(existingCart.getProducts() == null || existingCart.getProducts().isEmpty());
+			Assertions.assertTrue(existingCart.getCartProducts() == null || existingCart.getCartProducts().isEmpty());
 			
 
 			// Add product
-			boolean result = this.cartService.addProduct(CART_ID, PRODUCT_ID1);
+			boolean result = this.cartService.addProduct(CART_ID, PRODUCT_ID1, Long.valueOf(1));
 			Assertions.assertTrue(result);
 			
 			// Find cart with product
 			Cart existingCartWithProduct = this.cartService.findCart(CART_ID);
 			Assertions.assertNotNull(existingCartWithProduct);
 			Assertions.assertEquals(existingCartWithProduct.getId(), CART_ID);
-			Assertions.assertTrue(existingCartWithProduct.getProducts() != null);
-			Assertions.assertEquals(existingCartWithProduct.getProducts().get(0).getId(), PRODUCT_ID1);
+			Assertions.assertTrue(existingCartWithProduct.getCartProducts() != null);
+			Assertions.assertEquals(existingCartWithProduct.getCartProducts().get(0).getProductId(), PRODUCT_ID1);
 			
 		
 			// Remove product

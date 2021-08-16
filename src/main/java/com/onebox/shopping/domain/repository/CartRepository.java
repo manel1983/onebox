@@ -13,7 +13,7 @@ public interface CartRepository {
 	
 	boolean deleteCart(final Long cartId);
 	
-	boolean addProduct(final Long cartId, final Long productId);
+	boolean addProduct(final Long cartId, final Long productId, final Long amount);
 	
 	boolean removeProduct(final Long cartId, final Long productId);
 

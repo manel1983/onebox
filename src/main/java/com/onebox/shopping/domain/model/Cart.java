@@ -31,8 +31,8 @@ public class Cart implements Serializable {
 	private String username;
 
 	@NotNull
-	@ApiModelProperty(value = "The products")
-	private List<Product> products;
+	@ApiModelProperty(value = "The cart products")
+	private List<CartProducts> cartProducts;
 
 	@ApiModelProperty(value = "The creation time")
 	private LocalDateTime creationTime;
@@ -53,12 +53,12 @@ public class Cart implements Serializable {
 		this.username = username;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<CartProducts> getCartProducts() {
+		return cartProducts;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setCartProducts(List<CartProducts> cartProducts) {
+		this.cartProducts = cartProducts;
 	}
 
 	public LocalDateTime getCreationTime() {

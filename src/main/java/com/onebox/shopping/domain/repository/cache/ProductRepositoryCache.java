@@ -44,19 +44,19 @@ public class ProductRepositoryCache implements ProductRepository {
 		Product product = new Product();
 		product.setId(Long.valueOf("1"));
 		product.setDescription("Product 1");
-		product.setAmount(BigDecimal.valueOf(Double.valueOf("10.50")));
+		product.setPrice(BigDecimal.valueOf(Double.valueOf("10.50")));
 		products.add(product);
 
 		product = new Product();
 		product.setId(Long.valueOf("2"));
 		product.setDescription("Ticket 2");
-		product.setAmount(BigDecimal.valueOf(Double.valueOf("45.90")));
+		product.setPrice(BigDecimal.valueOf(Double.valueOf("45.90")));
 		products.add(product);
 
 		product = new Product();
 		product.setId(Long.valueOf("3"));
 		product.setDescription("Laptop 3");
-		product.setAmount(BigDecimal.valueOf(Double.valueOf("599.00")));
+		product.setPrice(BigDecimal.valueOf(Double.valueOf("599.00")));
 		products.add(product);
 		
 		return products;

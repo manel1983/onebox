@@ -43,7 +43,7 @@ public class CartTest {
 		try {
 			Cart cart = new Cart();
 			cart.setId(Long.valueOf(CART_ID));
-			cart.setProducts(new ArrayList<>());
+			cart.setCartProducts(new ArrayList<>());
 			cart.setUsername("MSA");
 
 			Mockito.when(cartRepository.createCart(cart)).thenReturn(CART_ID);
@@ -64,7 +64,7 @@ public class CartTest {
 			Cart existingCart = this.cartService.findCart(CART_ID);
 			Assertions.assertNotNull(existingCart);
 			Assertions.assertEquals(existingCart.getId(), CART_ID);
-			Assertions.assertTrue(existingCart.getProducts() == null || existingCart.getProducts().isEmpty());
+			Assertions.assertTrue(existingCart.getCartProducts() == null || existingCart.getCartProducts().isEmpty());
 		} catch(Exception e) {
 			LOG.error("Error on Find a Cart", e);
 			Assertions.assertTrue(false);
@@ -75,8 +75,8 @@ public class CartTest {
 	@DisplayName("Add a Carts Product")
 	public void addCartProduct() {
 		try {
-			Mockito.when(cartRepository.addProduct(CART_ID, PRODUCT_ID1)).thenReturn(true);
-			boolean result = this.cartService.addProduct(CART_ID, PRODUCT_ID1);
+			Mockito.when(cartRepository.addProduct(CART_ID, PRODUCT_ID1, Long.valueOf(1))).thenReturn(true);
+			boolean result = this.cartService.addProduct(CART_ID, PRODUCT_ID1, Long.valueOf(1));
 			Assertions.assertTrue(result);
 		} catch(Exception e) {
 			LOG.error("Error on add a Carts Product", e);
