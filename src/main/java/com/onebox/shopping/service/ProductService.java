@@ -2,7 +2,7 @@ package com.onebox.shopping.service;
 
 import java.util.List;
 
-import com.onebox.shopping.rest.model.Product;
+import com.onebox.shopping.domain.model.Product;
 
 public interface ProductService {
 

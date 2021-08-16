@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onebox.shopping.rest.model.Product;
+import com.onebox.shopping.domain.model.Product;
 import com.onebox.shopping.service.ProductService;
 
 import io.swagger.annotations.Api;

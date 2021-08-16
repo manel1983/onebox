@@ -1,6 +1,6 @@
 package com.onebox.shopping.service;
 
-import com.onebox.shopping.rest.model.Cart;
+import com.onebox.shopping.domain.model.Cart;
 
 public interface CartService {
 

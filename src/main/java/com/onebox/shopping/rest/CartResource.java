@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onebox.shopping.rest.model.Cart;
+import com.onebox.shopping.domain.model.Cart;
+import com.onebox.shopping.rest.model.CartProductDto;
 import com.onebox.shopping.service.CartService;
 
 import io.swagger.annotations.Api;
@@ -73,7 +75,7 @@ public class CartResource {
 	 *
 	 */
 	@ApiOperation(value = "Cart ", code = 200, notes = "Delete an existing cart.", consumes = "application/json", produces = "application/json")
-	@DeleteMapping("/cart")
+	@DeleteMapping("/cart/{cartId}")
 	public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
 		log.debug("Delete a cart");
 
@@ -92,10 +94,10 @@ public class CartResource {
 	 */
 	@ApiOperation(value = "Cart ", code = 201, notes = "Add a carts product.", consumes = "application/json", produces = "application/json")
 	@PostMapping("/cart_product")
-	public ResponseEntity<Void> addCartProduct(@PathVariable Long cartId, @PathVariable Long productId) {
+	public ResponseEntity<Void> addCartProduct(@RequestBody CartProductDto cartProductDto) {
 		log.debug("Add a carts product");
 
-		boolean result = this.cartService.addProduct(cartId, productId);
+		boolean result = this.cartService.addProduct(cartProductDto.getCartId(), cartProductDto.getProductId());
 		
 		if (result) {
 			return ResponseEntity.ok().build();
@@ -110,7 +112,7 @@ public class CartResource {
 	 */
 	@ApiOperation(value = "Cart ", code = 200, notes = "Delete a carts product.", consumes = "application/json", produces = "application/json")
 	@DeleteMapping("/cart_product")
-	public ResponseEntity<Void> deleteCartProduct(@PathVariable Long cartId, @PathVariable Long productId) {
+	public ResponseEntity<Void> deleteCartProduct(@RequestParam(name = "cartId") Long cartId, @RequestParam(name = "productId") Long productId) {
 		log.debug("Delete a carts product");
 
 		boolean result = this.cartService.removeProduct(cartId, productId);

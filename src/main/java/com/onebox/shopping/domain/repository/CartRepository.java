@@ -2,7 +2,7 @@ package com.onebox.shopping.domain.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.onebox.shopping.rest.model.Cart;
+import com.onebox.shopping.domain.model.Cart;
 
 @Repository
 public interface CartRepository {

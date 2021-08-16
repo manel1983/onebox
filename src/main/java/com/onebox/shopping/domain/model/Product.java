@@ -1,4 +1,4 @@
-package com.onebox.shopping.rest.model;
+package com.onebox.shopping.domain.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

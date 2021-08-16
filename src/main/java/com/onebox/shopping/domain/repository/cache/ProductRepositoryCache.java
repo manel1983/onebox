@@ -9,15 +9,16 @@ import java.util.stream.Collectors;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import com.onebox.shopping.domain.model.Product;
 import com.onebox.shopping.domain.repository.ProductRepository;
-import com.onebox.shopping.rest.model.Product;
 
 @Component
 public class ProductRepositoryCache implements ProductRepository {
 	
-	public Optional<Product> findProduct(final Long productId) {
+	public Product findProduct(final Long productId) {
 		List<Product> products =  cachedList();
-		return products.stream().filter(pr -> pr.getId().equals(productId)).findAny();
+		Optional<Product> optProduct = products.stream().filter(pr -> pr.getId().equals(productId)).findAny();
+		return optProduct.isPresent() ? optProduct.get() : null;
 	}
 
 	public List<Product> searchProducts(final String description) {

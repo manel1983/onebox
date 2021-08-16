@@ -4,31 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.onebox.shopping.domain.model.Cart;
+import com.onebox.shopping.domain.model.Product;
 import com.onebox.shopping.domain.repository.CartRepository;
-import com.onebox.shopping.rest.model.Cart;
-import com.onebox.shopping.rest.model.Product;
 
 @Component
+@Scope("singleton")
 public class CartRepositoryCache implements CartRepository {
 
+	public List<Cart> cachedCarts;
+	
 	public Cart findCart(final Long cartId) {
-		Optional<Cart> optCart = cachedList().stream().filter(ca -> ca.getId().equals(cartId)).findAny();
-		return optCart.isPresent() ? optCart.get() : null;
+		if (this.cachedCarts != null) {
+			Optional<Cart> optCart = this.cachedCarts.stream().filter(ca -> ca.getId().equals(cartId)).findAny();
+			return optCart.isPresent() ? optCart.get() : null;
+		} else {
+			this.cachedCarts = new ArrayList<>();
+			return null;
+		}
 	}
 
-	@CachePut(value = "carts", key = "#cartDb.id")
 	public Long createCart(final Cart cart) {
-		return Long.getLong("1");
+		if (this.cachedCarts == null) {
+			this.cachedCarts = new ArrayList<>();
+		}
+		this.cachedCarts.add(cart);
+		return cart.getId();
 	}
 
-	@CacheEvict(value = "carts", key = "#cartId")
 	public boolean deleteCart(final Long cartId) {
-		return true;
+		Cart cart = this.findCart(cartId);
+		if (cart != null) {
+			this.cachedCarts.remove(cart);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean addProduct(final Long cartId, final Long productId) {
@@ -66,7 +80,10 @@ public class CartRepositoryCache implements CartRepository {
 
 	@Cacheable("carts")
 	private List<Cart> cachedList() {
-		return new ArrayList<>();
+		if (cachedCarts == null) {
+			cachedCarts = new ArrayList<>();
+		}
+		return cachedCarts;
 	}
 
 }

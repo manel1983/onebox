@@ -1,4 +1,4 @@
-package com.onebox.shopping.rest.model;
+package com.onebox.shopping.domain.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +13,9 @@ import io.swagger.annotations.ApiModelProperty;
 public class Cart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	public Cart() {
+	}
 
 	public Cart(Long id) {
 		setId(id);
