@@ -51,4 +51,7 @@ public class CartServiceImpl implements CartService {
 		return this.cartRepository.removeProduct(cartId, productId);
 	}
 
+	public boolean isCartExpired(final Long cartId) {
+		return this.cartRepository.isCartExpired(cartId);
+	}
 }

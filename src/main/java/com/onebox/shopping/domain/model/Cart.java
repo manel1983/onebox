@@ -1,6 +1,7 @@
 package com.onebox.shopping.domain.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -33,6 +34,9 @@ public class Cart implements Serializable {
 	@ApiModelProperty(value = "The products")
 	private List<Product> products;
 
+	@ApiModelProperty(value = "The creation time")
+	private LocalDateTime creationTime;
+
 	public Long getId() {
 		return id;
 	}
@@ -55,6 +59,14 @@ public class Cart implements Serializable {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public LocalDateTime getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(LocalDateTime creationTime) {
+		this.creationTime = creationTime;
 	}
 
 }

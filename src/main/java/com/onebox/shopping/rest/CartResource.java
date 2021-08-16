@@ -46,9 +46,12 @@ public class CartResource {
 	 */
 	@ApiOperation(value = "Cart", code = 200, notes = "Find a Cart.", consumes = "application/json", produces = "application/json")
 	@GetMapping("/cart/{cartId}")
-	public ResponseEntity<Cart> findCart(@PathVariable Long cartId) {
-
+	public ResponseEntity findCart(@PathVariable Long cartId) {
 		log.debug("Find a Cart");
+
+		if (this.cartService.isCartExpired(cartId)) {
+			return ResponseEntity.status(400).body("The cart has expired.");
+		}
 
 		Cart cart = this.cartService.findCart(cartId);
 
@@ -62,7 +65,6 @@ public class CartResource {
 	@ApiOperation(value = "Cart ", code = 201, notes = "Create a new Cart.", consumes = "application/json", produces = "application/json")
 	@PostMapping("/cart")
 	public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
-
 		log.debug("Create a new Cart");
 
 		Cart newCart = this.cartService.createCart(cart);
@@ -94,15 +96,19 @@ public class CartResource {
 	 */
 	@ApiOperation(value = "Cart ", code = 201, notes = "Add a carts product.", consumes = "application/json", produces = "application/json")
 	@PostMapping("/cart_product")
-	public ResponseEntity<Void> addCartProduct(@RequestBody CartProductDto cartProductDto) {
+	public ResponseEntity addCartProduct(@RequestBody CartProductDto cartProductDto) {
 		log.debug("Add a carts product");
+
+		if (this.cartService.isCartExpired(cartProductDto.getCartId())) {
+			return ResponseEntity.status(400).body("The cart has expired.");
+		}
 
 		boolean result = this.cartService.addProduct(cartProductDto.getCartId(), cartProductDto.getProductId());
 		
 		if (result) {
 			return ResponseEntity.ok().build();
 		} else {
-			return ResponseEntity.status(400).build();
+			return ResponseEntity.status(400).body("An error occurred adding the product");
 		}
 	}
 
@@ -112,15 +118,19 @@ public class CartResource {
 	 */
 	@ApiOperation(value = "Cart ", code = 200, notes = "Delete a carts product.", consumes = "application/json", produces = "application/json")
 	@DeleteMapping("/cart_product")
-	public ResponseEntity<Void> deleteCartProduct(@RequestParam(name = "cartId") Long cartId, @RequestParam(name = "productId") Long productId) {
+	public ResponseEntity deleteCartProduct(@RequestParam(name = "cartId") Long cartId, @RequestParam(name = "productId") Long productId) {
 		log.debug("Delete a carts product");
+
+		if (this.cartService.isCartExpired(cartId)) {
+			return ResponseEntity.status(400).body("The cart has expired.");
+		}
 
 		boolean result = this.cartService.removeProduct(cartId, productId);
 		
 		if (result) {
 			return ResponseEntity.ok().build();
 		} else {
-			return ResponseEntity.status(400).build();
+			return ResponseEntity.status(400).body("An error ocurred trying to remove the product");
 		}
 	}
 

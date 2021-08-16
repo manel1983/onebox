@@ -17,4 +17,6 @@ public interface CartRepository {
 	
 	boolean removeProduct(final Long cartId, final Long productId);
 
+	boolean isCartExpired(final Long cartId);
+
 }

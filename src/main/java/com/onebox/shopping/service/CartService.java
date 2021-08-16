@@ -14,4 +14,6 @@ public interface CartService {
 	
 	boolean removeProduct(final Long cartId, final Long productId);
 
+	boolean isCartExpired(final Long cartId);
+
 }

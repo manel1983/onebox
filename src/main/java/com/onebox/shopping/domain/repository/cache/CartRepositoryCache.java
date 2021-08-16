@@ -1,5 +1,7 @@
 package com.onebox.shopping.domain.repository.cache;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +35,10 @@ public class CartRepositoryCache implements CartRepository {
 		}
 		Cart currentCart = this.findCart(cart.getId());
 		if (currentCart == null) {
+			cart.setCreationTime(LocalDateTime.now());
 			this.carts.add(cart);
 		} else {
+			cart.setCreationTime(currentCart.getCreationTime());
 			this.carts.remove(currentCart);
 			this.carts.add(cart);
 		}
@@ -49,7 +53,7 @@ public class CartRepositoryCache implements CartRepository {
 		}
 		return false;
 	}
-	
+
 	public boolean addProduct(final Long cartId, final Long productId) {
 		try {
 			Cart currentCart = this.findCart(cartId);
@@ -70,7 +74,7 @@ public class CartRepositoryCache implements CartRepository {
 			return false;
 		}
 	}
-	
+
 	public boolean removeProduct(final Long cartId, final Long productId) {
 		try {
 			Cart currentCart = this.findCart(cartId);
@@ -94,4 +98,16 @@ public class CartRepositoryCache implements CartRepository {
 		}
 	}
 
+	public boolean isCartExpired(final Long cartId) {
+		Cart cart = this.findCart(cartId);
+		if (cart == null) {
+			return true;
+		}
+		long minutes = cart.getCreationTime().until(LocalDateTime.now(), ChronoUnit.MINUTES);
+		if (minutes > 9) {
+			this.deleteCart(cart.getId());
+			return true;
+		}
+		return false;
+	}
 }
